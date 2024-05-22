@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,80 +22,119 @@
             overflow: hidden;
             transition: background-color 1s;
         }
+
         .question {
             font-size: 2em;
             margin-bottom: 20px;
         }
+
         .buttons {
             display: flex;
             gap: 20px;
         }
+
         .button {
             padding: 10px 50px;
             font-size: 1em;
             cursor: pointer;
-			border-radius : 25px;
+            border-radius: 25px;
             border: 2px solid #333;
-            background-color:  #ffe6e6;
+            background-color: #ffe6e6;
             transition: transform 0.2s;
         }
+
         .button:hover {
             transform: scale(1.1);
         }
-        #no {
+
+        .no {
             position: absolute;
             transition: top 0.1s ease, left 0.1s ease;
         }
+
         .hidden {
             display: none;
         }
+
         .heart {
             font-size: 5em;
             color: red;
             animation: pop-up 1s forwards;
         }
+
         @keyframes pop-up {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.5); opacity: 1; }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
+
         .message {
             font-size: 2em;
             margin-top: 20px;
             animation: fade-in 1.5s forwards;
         }
+
         @keyframes fade-in {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         #ok-button {
             padding: 10px 50px;
             font-size: 1em;
             cursor: pointer;
-			border-radius : 25px;
+            border-radius: 25px;
             border: 2px solid #333;
-            background-color:  #ffe6e6;
+            background-color: #ffe6e6;
             transition: transform 0.2s;
             animation: fade-in 1.5s forwards;
         }
+
         #ok-button:hover {
             transform: scale(1.1);
         }
+
         .dramatic-fade-out {
             animation: dramatic-fade-out 1s forwards;
         }
+
         @keyframes dramatic-fade-out {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.5) rotate(45deg); }
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.5) rotate(45deg);
+            }
         }
     </style>
 </head>
+
 <body>
     <div id="content">
         <div class="question">Cậu có thích tớ không?</div>
         <div class="buttons">
             <button id="yes" class="button">Có</button>
-            <button id="no" class="button">Không</button>
+            <button class="fake-no button">Không</button>
         </div>
     </div>
     <div id="result" class="hidden">
@@ -102,25 +142,25 @@
         <div class="message">Hihi mình cũng thích cậu nhiều lắm ❤️❤️❤️<br>Hay là mình hẹn hò nha ^^!</div>
         <button id="ok-button">OK</button>
     </div>
-	<div id="result2" class="hidden">
+    <div id="result2" class="hidden">
         <div class="message">
-			Yesss !Mình sẽ gặp lại cậu sớm thui ^^!!!
-		
-		</div>
+            Yesss !Mình sẽ gặp lại cậu sớm thui ^^!!!
+
+        </div>
     </div>
     <script>
-        const noButton = document.getElementById('no');
+        const fakeNoButton = document.getElementsByClassName('fake-no')[0];
         const yesButton = document.getElementById('yes');
-		const okButton = document.getElementById('ok-button');
+        const okButton = document.getElementById('ok-button');
         const content = document.getElementById('content');
         const result = document.getElementById('result');
         const body = document.body;
 
-        noButton.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - noButton.clientWidth);
-            const y = Math.random() * (window.innerHeight - noButton.clientHeight);
-            noButton.style.left = `${x}px`;
-            noButton.style.top = `${y}px`;
+        fakeNoButton.addEventListener('click', () => {
+            setUpNoButton()
+        });
+        fakeNoButton.addEventListener('mouseover', () => {
+            setUpNoButton()
         });
 
         yesButton.addEventListener('click', () => {
@@ -131,14 +171,36 @@
                 result.classList.remove('hidden');
             }, 1000); // Match the duration of the dramatic-fade-out animation
         });
-		okButton.addEventListener('click', () => {
+        okButton.addEventListener('click', () => {
             result.classList.add('dramatic-fade-out');
             setTimeout(() => {
                 result.classList.add('hidden');
                 result2.classList.remove('hidden');
             }, 1000); // Match the duration of the dramatic-fade-out animation
         });
+
+        function setUpNoButton(){
+            fakeNoButton.classList.remove("fake-no")
+            fakeNoButton.classList.add("no")
+            const x = Math.random() * (window.innerWidth - fakeNoButton.clientWidth);
+            const y = Math.random() * (window.innerHeight - fakeNoButton.clientHeight);
+            fakeNoButton.style.left = `${x}px`;
+            fakeNoButton.style.top = `${y}px`;
+
+            fakeNoButton.addEventListener('click', () => {
+                const x = Math.random() * (window.innerWidth - fakeNoButton.clientWidth);
+                const y = Math.random() * (window.innerHeight - fakeNoButton.clientHeight);
+                fakeNoButton.style.left = `${x}px`;
+                fakeNoButton.style.top = `${y}px`;
+            });
+            fakeNoButton.addEventListener('mouseover', () => {
+                const x = Math.random() * (window.innerWidth - fakeNoButton.clientWidth);
+                const y = Math.random() * (window.innerHeight - fakeNoButton.clientHeight);
+                fakeNoButton.style.left = `${x}px`;
+                fakeNoButton.style.top = `${y}px`;
+            });
+        }
     </script>
 </body>
+
 </html>
-    
